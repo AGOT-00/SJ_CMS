@@ -13,7 +13,7 @@
 <p>Go to <strong>Parent directory</strong> of the Project.</p>
 <p>Open terminal.</p>
 <p>Type <code> 
-flutter pub get</code>
+flutter pub get</code> then 
 <code>flutter run </code></p>
 <p>Now wait for flutter to compile the code.</p>
 <p>After compiling, it’ll show you the App in Virtual Device.</p>
