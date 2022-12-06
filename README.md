@@ -1,6 +1,6 @@
 
-<div class="stackedit__html"><h1 id="workshop-management-system">Workshop Management System</h1>
-<p>Its a workshop management application based on Flutter Framework</p>
+<div class="stackedit__html"><h1 id="workshop-management-system">S & J Management System</h1>
+<p>Its a Car workshop management application based on Flutter Framework</p>
 <h2 id="getting-started">Getting Started</h2>
 <p>If you want to build this app from the source,</p>
 <p>You need to install Flutter framework and install it in your system path.</p>
