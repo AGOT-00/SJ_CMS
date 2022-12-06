@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:proj/functions.dart';
 
 class allCars extends StatefulWidget {
   const allCars({super.key});
@@ -27,7 +28,7 @@ class _allCarsState extends State<allCars> {
       );
 
   Widget nameOfPerson() => Text(
-        '${allCars.forMale}  Malik Umer',
+        '${allCars.forMale}  ${LoggedinUser?.name}',
         style: TextStyle(
           color: allCars.paragraphColor,
           fontWeight: FontWeight.w600,
@@ -178,7 +179,7 @@ class _allCarsState extends State<allCars> {
           ]),
     );
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

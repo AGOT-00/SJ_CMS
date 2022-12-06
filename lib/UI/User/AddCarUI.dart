@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names, avoid_print, prefer_const_constructors, duplicate_ignore
 
 import 'package:flutter/material.dart';
-import 'functions.dart';
+import '/functions.dart';
 
 class AddCarUI extends StatefulWidget {
   const AddCarUI({super.key});
@@ -134,10 +134,35 @@ class _AddCarUIState extends State<AddCarUI> {
             children: [
               SizedBox(
                 width: 330,
-                child: button('Ani Diya Kaam Kr la', () {
+                child: button('Ani Diya', () {
                   AddCarUI.N();
                 }),
               ),
+              // SizedBox(
+              //   child: ElevatedButton(
+              //       onPressed: () {
+              //         print('hello world');
+              //       },
+              //       // ignore: sort_child_properties_last, prefer_const_constructors
+              //       child: Text(
+              //         'Add Car',
+              //         style: TextStyle(
+              //           fontSize: 20,
+              //           fontWeight: FontWeight.w600,
+              //         ),
+              //       ),
+              //       style: ButtonStyle(
+              //         padding: MaterialStatePropertyAll<EdgeInsets>(
+              //             EdgeInsets.fromLTRB(40, 20, 40, 20)),
+              //         backgroundColor:
+              //             MaterialStatePropertyAll<Color>(btnColor),
+              //         shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+              //           RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(12),
+              //           ),
+              //         ),
+              //       )),
+              // ),
             ],
           ),
         ],

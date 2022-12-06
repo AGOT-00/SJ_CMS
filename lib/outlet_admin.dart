@@ -2,8 +2,14 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
+import 'UI/outletAdmin/addParts.dart';
+import 'UI/outletAdmin/manageOutlet.dart';
+import 'UI/outletAdmin/manageStaff.dart';
+import 'UI/outletAdmin/manageUserAccount.dart';
+import 'UI/outletAdmin/transferUser.dart';
+
 class OutletAdmin extends StatelessWidget {
-  const OutletAdmin({super.key});
+  OutletAdmin({super.key});
 
   static const Color paragraphColor = Color.fromRGBO(148, 161, 178, 1);
   static const Color inputTextColor = Color.fromRGBO(22, 22, 26, 1);
@@ -54,13 +60,13 @@ class OutletAdmin extends StatelessWidget {
   }
 
   // create a list of string
-  static const List<String> list = [
-    'Manage Outlet',
-    'Manage Staff',
-    'Manage User Accounts',
-    'Transfer User',
-    'Add Parts',
-  ];
+  final list = <String, Function>{
+    'Manage Outlet': () => ManageOutlet(),
+    'Manage Staff': () => ManageStaff(),
+    'Manage User Accounts': () => ManageUserAccount(),
+    'Transfer User': () => TransferUser(),
+    'Add Parts': () => AddParts(),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +122,14 @@ class OutletAdmin extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            print(list[index]);
+                           // navigate to the page of the selected item and get
+                           // value from list map
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => list.values.toList()[index](),
+                              ),
+                            );
                           },
                           child: Container(
                             margin: EdgeInsets.only(bottom: 10),
@@ -133,7 +146,7 @@ class OutletAdmin extends StatelessWidget {
                             ),
                             child: ListTile(
                               title: Text(
-                                list[index],
+                                list.keys.elementAt(index),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
@@ -156,7 +169,7 @@ class OutletAdmin extends StatelessWidget {
             Flexible(
               flex: 1,
               child: logOutBtn('Logout'),
-            )
+            ),
           ],
         ),
       ),

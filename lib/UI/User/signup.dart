@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, no_leading_underscores_for_local_identifiers, avoid_print
 
 import 'package:flutter/material.dart';
-import 'login.dart';
-import 'functions.dart';
+import './Login/login.dart';
+import '../../functions.dart';
 // ignore: prefer_const_constructors
 
 class SignUp extends StatefulWidget {

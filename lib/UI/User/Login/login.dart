@@ -2,10 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../AddCarUI.dart';
+import 'package:proj/UI/User/allCars.dart';
+import 'package:proj/UI/User/dashboard.dart';
 import '../signup.dart';
-import '../Admin_Mode.dart';
-import '../functions.dart';
+import '../AddCarUI.dart';
+import '../../Admin_Mode.dart';
+import '/functions.dart';
 
 // ignore: camel_case_types
 class login extends StatefulWidget {
@@ -24,8 +26,6 @@ class login extends StatefulWidget {
 
 // ignore: camel_case_types
 class _loginState extends State<login> {
-  final phonecontroller = TextEditingController();
-  final otpcontroller = TextEditingController();
   String OTP="111222";
   UserClass? OTPUser;
   @override
@@ -76,7 +76,6 @@ class _loginState extends State<login> {
                 ),
                 Focus(child: PhoneNumberField(login.PhoneController),onFocusChange: (hasFocus){
                   if(!hasFocus){
-                    
                     SendOTP();
                     print('FOcus Lost');
                   }
@@ -195,6 +194,7 @@ class _loginState extends State<login> {
     void SendOTP() async{
     dynamic tempobj = await getUserCheckdata();
     print(tempobj);
+    
     if(tempobj is String){
       print(tempobj);
     }else if(tempobj is UserClass){
@@ -204,12 +204,14 @@ class _loginState extends State<login> {
     else{
       print("ERROR");
     }
+
   }
   //+923174120910
   void PerformValidation()
   {
     if(login.PhoneController.text == OTPUser?.phone && login.OTPController.text == OTP.toString()){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const AddCarUI()));
+      LoggedinUser = OTPUser;
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const allCars()));
     }
     else{
       print("\nWrong Information\n\n");
@@ -223,7 +225,9 @@ class _loginState extends State<login> {
       return ("\nError in Phone Number\n");
     }
     else{
+      print("Phone Number is Correct\n");
       UserClass? obj = await GetUserObj.readUserfromDatabase(phoneNumber);
+      
       if (obj != null) {
         print(obj.name);
         return obj;
@@ -236,8 +240,8 @@ class _loginState extends State<login> {
 
   @override
   void dispose() {
-    phonecontroller.dispose();
-    otpcontroller.dispose();
+    login.PhoneController.dispose();
+    login.OTPController.dispose();
     super.dispose();
   }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:proj/functions.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -18,6 +19,7 @@ class Dashboard extends StatelessWidget {
         backgroundImage: AssetImage('assets/avatar.png'),
         radius: 40,
       );
+  
   Widget addCarButton(String btnText) {
     return ElevatedButton(
         onPressed: () {},
@@ -42,14 +44,13 @@ class Dashboard extends StatelessWidget {
   }
 
   Widget nameOfPerson() => Text(
-        'Mr MaliK Umer',
+        '${LoggedinUser?.name}',
         style: TextStyle(
           color: Dashboard.paragraphColor,
           fontWeight: FontWeight.w600,
           fontSize: 25,
         ),
       );
-
       
   @override
   Widget build(BuildContext context) {

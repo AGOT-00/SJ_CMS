@@ -4,8 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'login.dart';
-import 'AddCarUI.dart';
+import './UI/User/Login/login.dart';
+
+UserClass? LoggedinUser;
 
 const Color btnColor = Color.fromRGBO(127, 90, 240, 1);
 
@@ -25,7 +26,6 @@ FocusNode? focus(int limit){
   return null;
 }
 
-
 List<TextInputFormatter>? obj(int limit) {
   if (limit > 0) {
       return [
@@ -34,8 +34,6 @@ List<TextInputFormatter>? obj(int limit) {
   }
   return null;
 }
-
-
 
 SizedBox PhoneNumberField(TextEditingController LoginController){
   return SizedBox(
@@ -150,22 +148,6 @@ SizedBox spacexaxis() {
 
 class Database {
   Database() {}
-
-  void savecartoDatabase() async {
-
-    final docUser = FirebaseFirestore.instance.collection('Car').doc(1.toString());
-    final json_obj = {
-      'CarName': 'Honda',
-      'CarModel': 'Civic',
-      'CarColor': 'Black',
-      'CarPrice': '1000000',
-      'CarImage': 'https://www.honda.com.pk/assets/images/cars/civic/2021/1.5L%20Turbo%20CVT%20EX%20Front%20View%20(1).jpg',
-      'CarDescription': 'This is a car',
-      'CarOwner': 'Ali',
-      'CarOwnerNumber': '+923XXXXXXXXX',
-      'CarOwnerEmail': '@gmail.com',};
-    await docUser.set(json_obj);
-  }
 
   Future<UserClass?> readUserfromDatabase(String phone) async {
     final docUser = FirebaseFirestore.instance.collection('Users').doc(phone);
