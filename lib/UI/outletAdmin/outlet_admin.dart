@@ -2,8 +2,16 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
-class FloorManager extends StatelessWidget {
-  const FloorManager({super.key});
+import '../User/Login/login.dart';
+import 'addParts.dart';
+import 'manageOutlet.dart';
+import 'manageStaff.dart';
+import 'manageUserAccount.dart';
+import 'transferUser.dart';
+
+
+class OutletAdmin extends StatefulWidget {
+  const OutletAdmin({super.key});
 
   static const Color paragraphColor = Color.fromRGBO(148, 161, 178, 1);
   static const Color inputTextColor = Color.fromRGBO(22, 22, 26, 1);
@@ -14,52 +22,64 @@ class FloorManager extends StatelessWidget {
   static const Color addedCarBorderColour = Color.fromRGBO(127, 92, 237, 1);
   static const Color deleteIconBgColour = Color.fromRGBO(248, 113, 113, 1);
 
+  @override
+  State<OutletAdmin> createState() => _OutletAdminState();
+}
+
+class _OutletAdminState extends State<OutletAdmin> {
   Widget avatarOfPerson() => CircleAvatar(
         backgroundImage: AssetImage('assets/avatar.png'),
         radius: 40,
       );
+
   Widget nameOfPerson() => Text(
-        'Floor Manager',
+        'Outlet Admin',
         style: TextStyle(
-          color: FloorManager.paragraphColor,
+          color: OutletAdmin.paragraphColor,
           fontWeight: FontWeight.w600,
           fontSize: 25,
         ),
       );
   Widget logOutBtn(String btnText) {
     return ElevatedButton(
-        onPressed: () {},
-        // ignore: sort_child_properties_last
-        child: Text(
-          btnText,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
+      onPressed: () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return login();
+        }));
+      },
+      // ignore: sort_child_properties_last
+      child: Text(
+        btnText,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      style: ButtonStyle(
+        padding: MaterialStatePropertyAll<EdgeInsets>(
+            EdgeInsets.fromLTRB(40, 20, 40, 20)),
+        backgroundColor: MaterialStatePropertyAll<Color>(OutletAdmin.btnColor),
+        shape: MaterialStatePropertyAll<SmoothRectangleBorder>(
+          SmoothRectangleBorder(
+            borderRadius: SmoothBorderRadius(
+              cornerRadius: 12,
+              cornerSmoothing: 0.5,
+            ),
           ),
         ),
-        style: ButtonStyle(
-          padding: MaterialStatePropertyAll<EdgeInsets>(
-              EdgeInsets.fromLTRB(40, 20, 40, 20)),
-          backgroundColor: MaterialStatePropertyAll<Color>(btnColor),
-          shape: MaterialStatePropertyAll<SmoothRectangleBorder>(
-            SmoothRectangleBorder(
-              borderRadius: SmoothBorderRadius(
-                cornerRadius: 12,
-                cornerSmoothing: 0.5,
-              ),
-            ),
-            ),
-          ),
-        );
+      ),
+    );
   }
 
   // create a list of string
-  static const List<String> list = [
-    'Manage Jobs',
-    'Manage Staff',
-    'Run Reports',
-    'Return Items',
-  ];
+  final list = <String, Function>{
+    'Manage Outlet': () => ManageOutlet(),
+    'Manage Staff': () => ManageStaff(),
+    'Manage User Accounts': () => ManageUserAccount(),
+    'Transfer User': () => TransferUser(),
+    'Add Parts': () => AddParts(),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +126,6 @@ class FloorManager extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  
                   MediaQuery.removePadding(
                     context: context,
                     removeTop: true,
@@ -116,7 +135,13 @@ class FloorManager extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            print(list[index]);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    list.values.toList()[index](),
+                              ),
+                            );
                           },
                           child: Container(
                             margin: EdgeInsets.only(bottom: 10),
@@ -131,10 +156,9 @@ class FloorManager extends StatelessWidget {
                                 ),
                               ),
                             ),
-                  
                             child: ListTile(
                               title: Text(
-                                list[index],
+                                list.keys.elementAt(index),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
@@ -155,9 +179,9 @@ class FloorManager extends StatelessWidget {
               ),
             ),
             Flexible(
-                flex: 1,
-                child: logOutBtn('Logout'),
-            )
+              flex: 1,
+              child: logOutBtn('Logout'),
+            ),
           ],
         ),
       ),

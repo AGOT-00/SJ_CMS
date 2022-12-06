@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, duplicate_ignore, unused_local_variable, file_names, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, file_names, unused_import, avoid_print, duplicate_ignore, non_constant_identifier_names, unused_local_variable
 
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../outlet_admin.dart';
+import '../Other_manager/inventory_manager.dart';
+import 'package:sda_app/UI/Other_manager/outlet_admin.dart';
+import 'package:sda_app/UI/Other_manager/workshop.dart';
 
 class ManageStaff extends StatefulWidget {
   const ManageStaff({super.key});
@@ -181,6 +182,33 @@ class _ManageStaffState extends State<ManageStaff> {
     );
   }
 
+  Widget addEmployeeBtn(String btnText) {
+    return ElevatedButton(
+      onPressed: () {},
+      // ignore: sort_child_properties_last
+      child: Text(
+        btnText,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      style: ButtonStyle(
+        padding: MaterialStatePropertyAll<EdgeInsets>(
+            EdgeInsets.fromLTRB(40, 20, 40, 20)),
+        backgroundColor: MaterialStatePropertyAll<Color>(ManageStaff.btnColor),
+        shape: MaterialStatePropertyAll<SmoothRectangleBorder>(
+          SmoothRectangleBorder(
+            borderRadius: SmoothBorderRadius(
+              cornerRadius: 12,
+              cornerSmoothing: 0.5,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
@@ -190,29 +218,36 @@ class _ManageStaffState extends State<ManageStaff> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-                  padding: const EdgeInsets.fromLTRB(25, 25, 25, 25),
-                  child: const TopBar(),
-                ),
-                AllEmployees('Workshop Managers', workshopManagers),
-                SizedBox(
-                  height: 20,
-                ),
-                AllEmployees('Floor Managers', floorManage),
-                SizedBox(
-                  height: 20,
-                ),
-                AllEmployees('Inventory Managers', inventoryManager),
-                SizedBox(
-                  height: 20,
-                ),
-                AllEmployees('Staff', staff),
-              ],
+            Align(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 35, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(25, 25, 25, 25),
+                    child: const TopBar(),
+                  ),
+                  AllEmployees('Workshop Managers', workshopManagers),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  AllEmployees('Floor Managers', floorManage),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  AllEmployees('Inventory Managers', inventoryManager),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  AllEmployees('Staff', staff),
+                ],
+              ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+            ),
+            addEmployeeBtn('+ Add Employee'),
           ],
         ),
       ),

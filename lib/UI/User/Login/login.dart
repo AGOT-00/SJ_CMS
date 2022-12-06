@@ -2,17 +2,19 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:proj/UI/User/allCars.dart';
-import 'package:proj/UI/User/dashboard.dart';
+import 'package:sda_app/UI/Other_manager/outlet_admin.dart';
+import '../../Car/allCars.dart';
+import '/UI/User/dashboard.dart';
 import '../signup.dart';
-import '../AddCarUI.dart';
+import '../../Car/AddCarUI.dart';
 import '../../Admin_Mode.dart';
 import '/functions.dart';
+import '/classes.dart';
 
 // ignore: camel_case_types
 class login extends StatefulWidget {
   const login({super.key});
-  
+
   static const Color paragraphColor = Color.fromRGBO(148, 161, 178, 1);
   static const Color inputTextColor = Color.fromRGBO(22, 22, 26, 1);
   static const Color btnColor = Color.fromRGBO(127, 90, 240, 1);
@@ -26,7 +28,7 @@ class login extends StatefulWidget {
 
 // ignore: camel_case_types
 class _loginState extends State<login> {
-  String OTP="111222";
+  String OTP = "111222";
   UserClass? OTPUser;
   @override
   Widget build(BuildContext context) {
@@ -74,18 +76,27 @@ class _loginState extends State<login> {
                 SizedBox(
                   height: 10,
                 ),
-                Focus(child: PhoneNumberField(login.PhoneController),onFocusChange: (hasFocus){
-                  if(!hasFocus){
-                    SendOTP();
-                    print('FOcus Lost');
-                  }
-                },),
+                Focus(
+                  child: PhoneNumberField(login.PhoneController),
+                  onFocusChange: (hasFocus) {
+                    if (!hasFocus) {
+                      SendOTP();
+                      print('Focus Lost');
+                    }
+                  },
+                ),
                 SizedBox(
                   height: 10,
                 ),
                 SizedBox(
-                    width: 330,
-                    child:inputField(placeholder: 'OTP', ifcontroller:  login.OTPController, type: TextInputType.number, iconobj: Icons.password,limit: 6),),
+                  width: 330,
+                  child: inputField(
+                      placeholder: 'OTP',
+                      ifcontroller: login.OTPController,
+                      type: TextInputType.number,
+                      iconobj: Icons.password,
+                      limit: 6),
+                ),
                 SizedBox(
                   height: 30,
                 ),
@@ -110,7 +121,7 @@ class _loginState extends State<login> {
                     //},
                     // ignore: sort_child_properties_last
                     child: Text(
-                      'Sign INO',
+                      'Sign In',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
@@ -169,6 +180,22 @@ class _loginState extends State<login> {
               children: [
                 InkWell(
                   onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => OutletAdmin()));
+                  },
+                  child: Text(
+                    'Manager Mode',
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 19,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -182,66 +209,71 @@ class _loginState extends State<login> {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                SizedBox(
-                  height: 30,
-                )
               ],
             )
           ]),
     );
   }
-  
-    void SendOTP() async{
+
+  void SendOTP() async {
     dynamic tempobj = await getUserCheckdata();
     print(tempobj);
-    
-    if(tempobj is String){
+
+    if (tempobj is String) {
       print(tempobj);
-    }else if(tempobj is UserClass){
+    } else if (tempobj is UserClass) {
       OTPUser = tempobj as UserClass;
       print("USER OTP SEND FUNCTION");
-    }
-    else{
+    } else {
       print("ERROR");
     }
-
   }
+
   //+923174120910
-  void PerformValidation()
-  {
-    if(login.PhoneController.text == OTPUser?.phone && login.OTPController.text == OTP.toString()){
-      LoggedinUser = OTPUser;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const allCars()));
-    }
-    else{
+  void PerformValidation() {
+    if (login.PhoneController.text == OTPUser?.phone &&
+        login.OTPController.text == OTP.toString()) {
+      //Singelton Class
+      loggedinUser obj = loggedinUser();
+      obj.setLoggedinUser(OTPUser!);
+
+      //Object Analysis
+      print(obj.getLoggedinUser()?.name);
+      showSnackBar(context, 'Login Successful');
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const allCars()));
+    } else {
+      showSnackBar(context, 'Login UNSuccessful');
+
       print("\nWrong Information\n\n");
     }
   }
-  
+
   dynamic getUserCheckdata() async {
     Database GetUserObj = Database();
     String phoneNumber = login.PhoneController.text;
-    if(phoneNumberchecks(phoneNumber)==false){
+    if (phoneNumberchecks(phoneNumber) == false) {
       return ("\nError in Phone Number\n");
-    }
-    else{
+    } else {
       print("Phone Number is Correct\n");
       UserClass? obj = await GetUserObj.readUserfromDatabase(phoneNumber);
-      
+
       if (obj != null) {
         print(obj.name);
         return obj;
-      }
-      else{
-        return("User Not Found");
+      } else {
+        return ("User Not Found");
       }
     }
   }
 
   @override
   void dispose() {
-    login.PhoneController.dispose();
-    login.OTPController.dispose();
+    // login.PhoneController.dispose();
+    // login.OTPController.dispose();
+    login.PhoneController.clear();
+    login.OTPController.clear();
     super.dispose();
   }
 }

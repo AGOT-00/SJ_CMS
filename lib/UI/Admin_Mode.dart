@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, no_leading_underscores_for_local_identifiers, avoid_print, file_names, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, duplicate_ignore, no_leading_underscores_for_local_identifiers, avoid_print, file_names, non_constant_identifier_names, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import './User/Login/login.dart';
 import '../functions.dart';
+import '/classes.dart';
 // ignore: prefer_const_constructors
 
 class SignUpAdmin extends StatefulWidget {
@@ -33,13 +34,17 @@ class _SignUpAdminState extends State<SignUpAdmin> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'WELCOME to System Admin',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 3.0,
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: Text(
+                      'WELCOME to System Admin',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 3.0,
+                      ),
                     ),
                   ),
                 ],
@@ -65,8 +70,11 @@ class _SignUpAdminState extends State<SignUpAdmin> {
                 ),
                 SizedBox(
                     width: 330,
-                    child: inputField(placeholder:'Customer Name', ifcontroller:SignUpAdmin.Name,
-                        type:TextInputType.name,iconobj: Icons.person)),
+                    child: inputField(
+                        placeholder: 'Customer Name',
+                        ifcontroller: SignUpAdmin.Name,
+                        type: TextInputType.name,
+                        iconobj: Icons.person)),
                 SizedBox(
                   height: 10,
                 ),
@@ -136,6 +144,7 @@ class _SignUpAdminState extends State<SignUpAdmin> {
     print(Obj);
     Database Init = Database();
     Init.saveUsertoDatabase(Obj);
+    showSnackBar(context, 'User Added Successfully');
   }
 
   _navigatetologin() {

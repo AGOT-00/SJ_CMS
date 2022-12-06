@@ -21,7 +21,8 @@ class _SplashState extends State<Splash> {
     super.initState();
     _navigatetologin();
   }
-
+  
+  //Gets the Logo and displays it for Few seconds
   @override
   Widget build(BuildContext context) {
     return Scaffold(

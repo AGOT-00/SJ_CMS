@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, non_constant_identifier_names, unused_import, empty_constructor_bodies, dead_code
+// ignore_for_file: avoid_print, non_constant_identifier_names, unused_import, empty_constructor_bodies, dead_code, camel_case_types
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,59 +6,69 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './UI/User/Login/login.dart';
 
-UserClass? LoggedinUser;
-
 const Color btnColor = Color.fromRGBO(127, 90, 240, 1);
 
 bool phoneNumberchecks(String phone) {
-  if(phone.length == 13){
+  if (phone.length == 13) {
     return true;
-  }
-  else{
+  } 
+  else {
     return false;
   }
 }
 
-FocusNode? focus(int limit){
-  if(limit==13){
+FocusNode? focus(int limit) {
+  if (limit == 13) {
     return FocusNode();
   }
-  return null;
+  return FocusNode();
 }
 
 List<TextInputFormatter>? obj(int limit) {
   if (limit > 0) {
-      return [
-        LengthLimitingTextInputFormatter(limit),
-      ];
+    return [
+      LengthLimitingTextInputFormatter(limit),
+    ];
   }
   return null;
 }
 
-SizedBox PhoneNumberField(TextEditingController LoginController){
+SizedBox PhoneNumberField(TextEditingController LoginController) {
   return SizedBox(
-                    width: 330,
-                    child: Focus(
-                        child:inputField(placeholder:'+923XXXXXXXXX', ifcontroller:LoginController,
-                            type:TextInputType.phone,iconobj: Icons.phone,limit: 13),
-                        onFocusChange: (hasFocus) {
-                          if (hasFocus) {
-                            print('\n\nFocused\n\n\n');
-                          } else {
-                            print('\n\nUnfocused\n\n\n');
-                          }
-                        }));
+      width: 330,
+      child: Focus(
+          child: inputField(
+              placeholder: '+923XXXXXXXXX',
+              ifcontroller: LoginController,
+              type: TextInputType.phone,
+              iconobj: Icons.phone,
+              limit: 13),
+          onFocusChange: (hasFocus) {
+            if (hasFocus) {
+              print('\n\nFocused\n\n\n');
+            } else {
+              print('\n\nUnfocused\n\n\n');
+            }
+          }));
 }
 
-SizedBox OTPField(TextEditingController OTPController){
-  return  SizedBox(
-                    width: 330,
-                    child:inputField(placeholder: 'OTP', ifcontroller: OTPController, type: TextInputType.number, iconobj: Icons.password)
-                );
+SizedBox OTPField(TextEditingController OTPController) {
+  return SizedBox(
+      width: 330,
+      child: inputField(
+          placeholder: 'OTP',
+          ifcontroller: OTPController,
+          type: TextInputType.number,
+          iconobj: Icons.password));
 }
 
-Widget inputField({required String placeholder,required final ifcontroller,required TextInputType type,
-      required IconData iconobj,int limit=0,FocusNode? Obj}) {
+Widget inputField(
+    {required String placeholder,
+    required final ifcontroller,
+    required TextInputType type,
+    required IconData iconobj,
+    int limit = 0,
+    FocusNode? Obj}) {
   return Container(
     // decoration: BoxDecoration(
     //   border: Border.all(width: 1, color: Colors.grey),
@@ -66,7 +76,7 @@ Widget inputField({required String placeholder,required final ifcontroller,requi
     // ),
     child: (TextField(
       inputFormatters: obj(limit),
-      focusNode: focus(limit),
+      //focusNode: focus(limit),
       textAlign: TextAlign.left,
       keyboardType: type,
       controller: ifcontroller,
@@ -146,47 +156,11 @@ SizedBox spacexaxis() {
   );
 }
 
-class Database {
-  Database() {}
-
-  Future<UserClass?> readUserfromDatabase(String phone) async {
-    final docUser = FirebaseFirestore.instance.collection('Users').doc(phone);
-    final Userdata = await docUser.get();
-
-    if (Userdata.exists) {
-      UserClass Data = UserClass.fromJson(Userdata.data()!);
-      return Data;
-    }
-    return null;
-  }
-
-  void saveUsertoDatabase(UserClass obj) async {
-    final docUser =
-        FirebaseFirestore.instance.collection('Users').doc(obj.phone);
-    final json_obj = obj.toJson();
-    await docUser.set(json_obj);
-  }
-}
-
-class UserClass {
-  String? name;
-  String? phone;
-  String? cnic;
-  bool? active;
-
-  UserClass(
-      {required this.name,
-      required this.phone,
-      this.active = false,
-      this.cnic = ''});
-
-  Map<String, dynamic> toJson() =>
-      {'phone': phone, 'name': name, 'cnic': cnic, 'active': active};
-
-  static UserClass fromJson(Map<String, dynamic> Obj) => UserClass(
-      name: Obj['name'],
-      phone: Obj['phone'],
-      cnic: Obj['cnic'],
-      active: Obj['active']);
-
+void showSnackBar(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 2),
+    ),
+  );
 }

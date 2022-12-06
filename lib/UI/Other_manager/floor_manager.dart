@@ -2,15 +2,9 @@
 import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
-import 'UI/outletAdmin/addParts.dart';
-import 'UI/outletAdmin/manageOutlet.dart';
-import 'UI/outletAdmin/manageStaff.dart';
-import 'UI/outletAdmin/manageUserAccount.dart';
-import 'UI/outletAdmin/transferUser.dart';
-
-class OutletAdmin extends StatelessWidget {
-  OutletAdmin({super.key});
-
+class FloorManager extends StatelessWidget {
+  const FloorManager({super.key});
+  //Controllers
   static const Color paragraphColor = Color.fromRGBO(148, 161, 178, 1);
   static const Color inputTextColor = Color.fromRGBO(22, 22, 26, 1);
   static const Color btnColor = Color.fromRGBO(127, 90, 240, 1);
@@ -25,48 +19,49 @@ class OutletAdmin extends StatelessWidget {
         radius: 40,
       );
   Widget nameOfPerson() => Text(
-        'Outlet Admin',
+        'Floor Manager',
         style: TextStyle(
-          color: OutletAdmin.paragraphColor,
+          color: FloorManager.paragraphColor,
           fontWeight: FontWeight.w600,
           fontSize: 25,
         ),
       );
+  
+  //Logs the user out
   Widget logOutBtn(String btnText) {
     return ElevatedButton(
-      onPressed: () {},
-      // ignore: sort_child_properties_last
-      child: Text(
-        btnText,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-      style: ButtonStyle(
-        padding: MaterialStatePropertyAll<EdgeInsets>(
-            EdgeInsets.fromLTRB(40, 20, 40, 20)),
-        backgroundColor: MaterialStatePropertyAll<Color>(btnColor),
-        shape: MaterialStatePropertyAll<SmoothRectangleBorder>(
-          SmoothRectangleBorder(
-            borderRadius: SmoothBorderRadius(
-              cornerRadius: 12,
-              cornerSmoothing: 0.5,
-            ),
+        onPressed: () {},
+        // ignore: sort_child_properties_last
+        child: Text(
+          btnText,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
           ),
         ),
-      ),
-    );
+        style: ButtonStyle(
+          padding: MaterialStatePropertyAll<EdgeInsets>(
+              EdgeInsets.fromLTRB(40, 20, 40, 20)),
+          backgroundColor: MaterialStatePropertyAll<Color>(btnColor),
+          shape: MaterialStatePropertyAll<SmoothRectangleBorder>(
+            SmoothRectangleBorder(
+              borderRadius: SmoothBorderRadius(
+                cornerRadius: 12,
+                cornerSmoothing: 0.5,
+              ),
+            ),
+            ),
+          ),
+        );
   }
 
   // create a list of string
-  final list = <String, Function>{
-    'Manage Outlet': () => ManageOutlet(),
-    'Manage Staff': () => ManageStaff(),
-    'Manage User Accounts': () => ManageUserAccount(),
-    'Transfer User': () => TransferUser(),
-    'Add Parts': () => AddParts(),
-  };
+  static const List<String> list = [
+    'Manage Jobs',
+    'Manage Staff',
+    'Run Reports',
+    'Return Items',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +108,7 @@ class OutletAdmin extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
+                  
                   MediaQuery.removePadding(
                     context: context,
                     removeTop: true,
@@ -122,14 +118,7 @@ class OutletAdmin extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                           // navigate to the page of the selected item and get
-                           // value from list map
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => list.values.toList()[index](),
-                              ),
-                            );
+                            print(list[index]);
                           },
                           child: Container(
                             margin: EdgeInsets.only(bottom: 10),
@@ -144,9 +133,10 @@ class OutletAdmin extends StatelessWidget {
                                 ),
                               ),
                             ),
+                  
                             child: ListTile(
                               title: Text(
-                                list.keys.elementAt(index),
+                                list[index],
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
@@ -167,9 +157,9 @@ class OutletAdmin extends StatelessWidget {
               ),
             ),
             Flexible(
-              flex: 1,
-              child: logOutBtn('Logout'),
-            ),
+                flex: 1,
+                child: logOutBtn('Logout'),
+            )
           ],
         ),
       ),

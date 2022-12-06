@@ -86,7 +86,7 @@ class _SignUpState extends State<SignUp> {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      print('hello world');
+                      showSnackBar(context, 'Dummy Sign Up');
                     },
                     // ignore: sort_child_properties_last
                     child: Text(

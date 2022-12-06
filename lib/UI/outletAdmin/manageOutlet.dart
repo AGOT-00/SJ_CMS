@@ -1,9 +1,9 @@
-// ignore_for_file: prefer_const_constructors, camel_case_types, avoid_print, file_names
+// ignore_for_file: prefer_const_constructors, camel_case_types, file_names
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:figma_squircle/figma_squircle.dart';
-import '/outlet_admin.dart';
+import 'package:sda_app/UI/Other_manager/outlet_admin.dart';
 
 class ManageOutlet extends StatelessWidget {
   const ManageOutlet({super.key});
