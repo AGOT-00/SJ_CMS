@@ -1,6 +1,5 @@
-#  Workshop Management System
 
-  
+#  S&J Workshop Management System
 
 Its a workshop management application based on Flutter Framework
 
@@ -36,8 +35,8 @@ If you just want to compile the app, then simply run any virtual android device.
 Go to **Parent directory** of the Project.
 
 Open terminal. 
-
-Type <code> flutter run </code>
+Type <code> flutter pub get</code>
+then type <code> flutter run </code>
 
 Now wait for flutter to compile the code.
 
